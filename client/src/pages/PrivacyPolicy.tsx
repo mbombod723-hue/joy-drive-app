@@ -194,8 +194,8 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
               </p>
               <p>
                 <strong>Phone:</strong>{' '}
-                <a href="tel:+27123456789" className="text-blue-600 hover:underline">
-                  +27 (0)1 234 5678
+                <a href="tel:+27788002462" className="text-blue-600 hover:underline">
+                  +27 788 002 462
                 </a>
               </p>
             </div>

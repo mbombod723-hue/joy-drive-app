@@ -72,12 +72,12 @@ export default function App() {
   ];
 
   const services = [
-    { id: 'lite', name: t.lite, icon: Car, color: 'bg-blue-500', price: 'R 45' },
-    { id: 'economy', name: t.economy, icon: Car, color: 'bg-green-500', price: 'R 85' },
-    { id: 'express', name: t.express, icon: Truck, color: 'bg-orange-500', price: 'R 145' },
-    { id: 'vip', name: t.vip, icon: Car, color: 'bg-purple-500', price: 'R 295' },
-    { id: 'package', name: t.packages, icon: Package, color: 'bg-pink-500', price: 'R 120' },
-    { id: 'moving', name: t.moving, icon: Truck, color: 'bg-indigo-500', price: 'R 1200' },
+    { id: 'lite', name: 'Joy Lite', icon: Car, color: '#3B82F6', bgColor: 'bg-blue-500', price: 'R 45' },
+    { id: 'economy', name: 'Joy Economy', icon: Car, color: '#10B981', bgColor: 'bg-green-500', price: 'R 85' },
+    { id: 'express', name: 'Joy Express', icon: Truck, color: '#F59E0B', bgColor: 'bg-amber-500', price: 'R 145' },
+    { id: 'vip', name: 'Joy VIP', icon: Car, color: '#8B5CF6', bgColor: 'bg-purple-500', price: 'R 295' },
+    { id: 'package', name: 'Joy Packages', icon: Package, color: '#EF4444', bgColor: 'bg-red-500', price: 'R 120' },
+    { id: 'moving', name: 'Joy Moving', icon: Truck, color: '#EC4899', bgColor: 'bg-pink-500', price: 'R 1200' },
   ];
 
   useEffect(() => {
@@ -423,9 +423,17 @@ export default function App() {
             initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
-            className={cn('fixed left-0 top-0 h-full w-64 shadow-lg z-50 flex flex-col', theme === 'dark' ? 'bg-gray-800' : 'bg-white')}
+               className={cn('fixed left-0 top-0 h-full w-64 shadow-lg z-[9999] flex flex-col', theme === 'dark' ? 'bg-gray-800' : 'bg-white')}
           >
-            <div className="p-4 border-b" style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e7eb' }}>
+            {/* Overlay behind menu */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowHamburger(false)}
+              className="fixed inset-0 bg-black z-[9998]"
+            />
+            <div className="p-4 border-b relative z-[10000]" style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e7eb' }}>
               <button onClick={() => setShowHamburger(false)} className="p-2">
                 <X className="w-6 h-6" />
               </button>
@@ -467,6 +475,14 @@ export default function App() {
             <div className="border-t p-4 space-y-2" style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e7eb' }}>
               <button onClick={handleSignOut} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 text-red-600')}>
                 <LogOut className="w-5 h-5" /> {'Logout'}
+              </button>
+              <button onClick={() => {
+                if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                  console.log('Deleting account...');
+                  handleSignOut();
+                }
+              }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-red-200 dark:hover:bg-red-900 flex items-center gap-2 text-red-600')}>
+                <X className="w-5 h-5" /> {'Delete Account'}
               </button>
             </div>
           </motion.div>

@@ -14,7 +14,7 @@ export interface Vehicle {
 export const VEHICLES: Record<string, Vehicle> = {
   lite: {
     id: 'lite',
-    name: 'Lite',
+    name: 'Joy Lite',
     color: '#3B82F6', // Blue
     icon: '🚗',
     basePricePerKm: 8.50,
@@ -24,7 +24,7 @@ export const VEHICLES: Record<string, Vehicle> = {
   },
   economy: {
     id: 'economy',
-    name: 'Economy',
+    name: 'Joy Economy',
     color: '#10B981', // Green
     icon: '🚙',
     basePricePerKm: 12.50,
@@ -34,7 +34,7 @@ export const VEHICLES: Record<string, Vehicle> = {
   },
   express: {
     id: 'express',
-    name: 'Express',
+    name: 'Joy Express',
     color: '#F59E0B', // Amber
     icon: '🚕',
     basePricePerKm: 15.00,
@@ -44,7 +44,7 @@ export const VEHICLES: Record<string, Vehicle> = {
   },
   vip: {
     id: 'vip',
-    name: 'VIP',
+    name: 'Joy VIP',
     color: '#8B5CF6', // Purple
     icon: '🚘',
     basePricePerKm: 22.50,
@@ -54,7 +54,7 @@ export const VEHICLES: Record<string, Vehicle> = {
   },
   packages: {
     id: 'packages',
-    name: 'Packages',
+    name: 'Joy Packages',
     color: '#EF4444', // Red
     icon: '📦',
     basePricePerKm: 10.00,
@@ -64,7 +64,7 @@ export const VEHICLES: Record<string, Vehicle> = {
   },
   moving: {
     id: 'moving',
-    name: 'Moving',
+    name: 'Joy Moving',
     color: '#EC4899', // Pink
     icon: '🚚',
     basePricePerKm: 35.00,
