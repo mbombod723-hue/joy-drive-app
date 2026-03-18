@@ -13,6 +13,7 @@ import { AddressSearch } from './components/AddressSearch';
 import { DriverCard, type Driver } from './components/DriverCard';
 import { RatingModal, type RatingData } from './components/RatingModal';
 import { BecomeDriverForm, type DriverFormData } from './components/BecomeDriverForm';
+import { ChatBox } from './components/ChatBox';
 import { AboutPage } from './pages/About';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
 import { calculatePrice, estimateETA, calculateDistance, formatPrice, getVehicleColor } from './lib/vehicleSystem';
@@ -29,6 +30,7 @@ export default function App() {
   const [showAbout, setShowAbout] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showBecomeDriver, setShowBecomeDriver] = useState(false);
+  const [showChat, setShowChat] = useState(false);
   const { language, theme, setTheme, setLanguage, isNotificationsEnabled, toggleNotifications, isLocationSharingEnabled, toggleLocationSharing, activeTrip, setActiveTrip } = useAppStore();
   const { user, setUser, userName, setUserName, profilePic, setProfilePic } = useAuthStore();
   const t = translations[language];
@@ -492,13 +494,32 @@ export default function App() {
                 alert('Calling ' + currentDriver.name);
               }}
               onMessage={() => {
-                console.log('Messaging driver...');
-                alert('Opening chat with ' + currentDriver.name);
+                setShowChat(true);
               }}
               onCancel={() => {
                 setShowDriverCard(false);
                 setTripStatus('idle');
               }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Chat Modal */}
+      {showChat && currentDriver && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full h-96">
+            <ChatBox
+              driverId={parseInt(currentDriver.id)}
+              driverName={`${currentDriver.name} ${currentDriver.surname}`}
+              currentUserId={1} // This should come from auth context
+              currentUserName={userName}
+              onClose={() => setShowChat(false)}
+              onCall={() => {
+                console.log('Calling driver...');
+                alert('Calling ' + currentDriver.name);
+              }}
+              theme={theme === 'dark' ? 'dark' : 'light'}
             />
           </div>
         </div>

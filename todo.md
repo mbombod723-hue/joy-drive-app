@@ -29,7 +29,11 @@
   - [x] Couleur du véhicule
   - [x] Numéro matricule
   - [x] Options message et appel
-- [ ] Ajouter système de messagerie en temps réel (Supabase)
+- [x] Ajouter système de messagerie en temps réel (Supabase)
+  - [x] Schema de base de donnees
+  - [x] Composant ChatBox
+  - [x] Procedures tRPC
+  - [x] Tests vitest
 - [ ] Ajouter système d'appel (intégration)
 
 ## Phase 5: Trip & Notifications

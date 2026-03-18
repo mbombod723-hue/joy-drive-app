@@ -1,5 +1,5 @@
-import { Phone, MessageCircle, Star, MapPin, Clock } from 'lucide-react';
 import { useState } from 'react';
+import { MessageCircle, Phone, Clock, MapPin, Star } from 'lucide-react';
 
 export interface Driver {
   id: string;
