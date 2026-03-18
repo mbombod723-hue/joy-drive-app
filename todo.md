@@ -118,3 +118,18 @@
 - [x] Créer service de géocodage complet
 - [x] Créer composant PlacesAutocomplete avec recherche Places
 - [x] Créer utilitaires pour marqueurs draggables
+
+
+## Phase 15: Vercel Deployment (March 18, 2026)
+- [x] Créer configuration Vercel (vercel.json)
+- [x] Créer fichier .vercelignore
+- [x] Créer guide de déploiement VERCEL_DEPLOYMENT.md
+- [x] Créer documentation des variables d'environnement
+- [x] Créer script de déploiement automatisé
+- [x] Créer checklist de déploiement
+- [x] Vérifier la compatibilité TypeScript
+- [x] Vérifier que le build fonctionne
+- [ ] Exporter le code vers GitHub
+- [ ] Configurer les variables d'environnement sur Vercel
+- [ ] Déployer sur Vercel
+- [ ] Tester l'application en production
