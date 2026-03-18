@@ -81,3 +81,12 @@
 - [x] Vérifier l'intégration Supabase
 - [x] Vérifier l'intégration Stripe
 - [ ] Déployer sur Vercel
+
+## Phase 12: Recent Updates (March 18, 2026)
+- [x] Ajouter upload de photo de profil depuis galerie
+- [x] Corriger l'affichage des pages Profile, Notifications, History, Language, ShareLocation
+- [x] Ajouter animation "Searching for drivers..." au bouton Find a Driver
+- [x] Ajouter simulation de trajet avec délai (2s recherche, 5s arrivée)
+- [x] Vérifier que le numéro +27788002462 est présent dans About
+- [ ] Vérifier la connexion Supabase et les tables créées
+- [ ] Tester l'authentification Supabase

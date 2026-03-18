@@ -263,6 +263,31 @@ export default function App() {
     );
   }
 
+  // Show Profile page
+  if (showProfile) {
+    return <ProfilePage onBack={() => setShowProfile(false)} />;
+  }
+
+  // Show Notifications page
+  if (showNotificationsPage) {
+    return <NotificationsPage onBack={() => setShowNotificationsPage(false)} />;
+  }
+
+  // Show History page
+  if (showHistoryPage) {
+    return <HistoryPage onBack={() => setShowHistoryPage(false)} />;
+  }
+
+  // Show Language page
+  if (showLanguagePage) {
+    return <LanguagePage onBack={() => setShowLanguagePage(false)} />;
+  }
+
+  // Show Share Location page
+  if (showShareLocationPage) {
+    return <ShareLocationPage onBack={() => setShowShareLocationPage(false)} />;
+  }
+
   // make sure to consider if you need authentication for certain routes
   return (
     <div className={cn('flex flex-col', theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900')} style={{ height: '100vh' }}>
@@ -401,27 +426,44 @@ export default function App() {
           {/* Find Driver Button */}
           <button
             onClick={() => {
-              // Simulate finding a driver
-              const mockDriver: Driver = {
-                id: 'DRV-001',
-                name: 'Thabo',
-                surname: 'Mthembu',
-                rating: 4.8,
-                reviews: 342,
-                vehicleColor: getVehicleColor(selectedVehicleType),
-                vehicleType: selectedVehicleType.charAt(0).toUpperCase() + selectedVehicleType.slice(1),
-                licensePlate: 'JHB 234 GP',
-                photo: undefined,
-                eta: estimateETA(calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng)),
-                distance: calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng),
-              };
-              setCurrentDriver(mockDriver);
-              setShowDriverCard(true);
-              setTripStatus('arriving');
+              // Simulate finding a driver with animation
+              setTripStatus('searching');
+              
+              // Simulate search delay
+              setTimeout(() => {
+                const mockDriver: Driver = {
+                  id: 'DRV-001',
+                  name: 'Thabo',
+                  surname: 'Mthembu',
+                  rating: 4.8,
+                  reviews: 342,
+                  vehicleColor: getVehicleColor(selectedVehicleType),
+                  vehicleType: selectedVehicleType.charAt(0).toUpperCase() + selectedVehicleType.slice(1),
+                  licensePlate: 'JHB 234 GP',
+                  photo: undefined,
+                  eta: estimateETA(calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng)),
+                  distance: calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng),
+                };
+                setCurrentDriver(mockDriver);
+                setShowDriverCard(true);
+                setTripStatus('arriving');
+                
+                // Simulate driver arriving after 5 seconds
+                setTimeout(() => {
+                  setTripStatus('arrived');
+                }, 5000);
+              }, 2000);
             }}
             className="w-full py-3 bg-gradient-to-r from-blue-900 to-blue-800 text-white font-bold rounded-lg hover:from-blue-800 hover:to-blue-700 transition-all"
           >
-            {t.findADriver || 'Find a Driver'}
+            {tripStatus === 'searching' ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="inline-block animate-spin">⟳</span>
+                Searching for drivers...
+              </span>
+            ) : (
+              t.findADriver || 'Find a Driver'
+            )}
           </button>
         </div>
       </div>

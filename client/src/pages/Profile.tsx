@@ -1,4 +1,5 @@
-import { User, Mail, Phone, MapPin, Star, ArrowLeft } from 'lucide-react';
+import React, { useRef } from 'react';
+import { User, Mail, Phone, MapPin, Star, ArrowLeft, Camera } from 'lucide-react';
 import { useAuthStore } from '../store/useStore';
 
 interface ProfilePageProps {
@@ -8,6 +9,19 @@ interface ProfilePageProps {
 export function ProfilePage({ onBack }: ProfilePageProps) {
   const { userName, setUserName, profilePic, setProfilePic } = useAuthStore();
   const [editName, setEditName] = React.useState(userName);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        setProfilePic(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-white dark:bg-gray-900 z-[9999] overflow-y-auto">
@@ -21,12 +35,29 @@ export function ProfilePage({ onBack }: ProfilePageProps) {
       <div className="p-6 space-y-6">
         {/* Profile Picture */}
         <div className="flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white text-4xl font-bold">
-            {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full rounded-full object-cover" /> : userName?.charAt(0).toUpperCase()}
+          <div className="relative">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white text-4xl font-bold overflow-hidden">
+              {profilePic ? (
+                <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                userName?.charAt(0).toUpperCase()
+              )}
+            </div>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="absolute bottom-0 right-0 bg-green-500 text-white p-2 rounded-full hover:bg-green-600 shadow-lg"
+            >
+              <Camera className="w-5 h-5" />
+            </button>
           </div>
-          <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-            Change Photo
-          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+            className="hidden"
+          />
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Click camera icon to change photo</p>
         </div>
 
         {/* Name */}
@@ -36,7 +67,7 @@ export function ProfilePage({ onBack }: ProfilePageProps) {
             type="text"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
+            className="w-full px-4 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
 
@@ -61,11 +92,11 @@ export function ProfilePage({ onBack }: ProfilePageProps) {
           <input
             type="tel"
             value="+27 123 456 7890"
-            className="w-full px-4 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
+             className="w-full px-4 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
 
-        {/* Rating */}
+        {/* Phone */}
         <div>
           <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
             <Star className="w-4 h-4 text-yellow-500" /> Rating
@@ -86,7 +117,7 @@ export function ProfilePage({ onBack }: ProfilePageProps) {
             setUserName(editName);
             onBack();
           }}
-          className="w-full py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600"
+          className="w-full py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all"
         >
           Save Changes
         </button>
@@ -94,5 +125,3 @@ export function ProfilePage({ onBack }: ProfilePageProps) {
     </div>
   );
 }
-
-import React from 'react';
