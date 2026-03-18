@@ -484,7 +484,7 @@ export default function App() {
 
       {/* Driver Card Modal */}
       {showDriverCard && currentDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-y-auto">
             <DriverCard
               driver={currentDriver}
@@ -505,14 +505,14 @@ export default function App() {
         </div>
       )}
 
-      {/* Chat Modal */}
+      {/* Chat Box Modal */}
       {showChat && currentDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full h-96">
             <ChatBox
               driverId={parseInt(currentDriver.id)}
               driverName={`${currentDriver.name} ${currentDriver.surname}`}
-              currentUserId={1} // This should come from auth context
+              currentUserId={1}
               currentUserName={userName}
               onClose={() => setShowChat(false)}
               onCall={() => {
