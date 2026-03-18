@@ -419,20 +419,21 @@ export default function App() {
       {/* Hamburger Menu */}
       <AnimatePresence>
         {showHamburger && (
-          <motion.div
+          <>
+            {/* Overlay behind menu */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowHamburger(false)}
+              className="fixed inset-0 bg-black z-[9998]"
+            />
+            <motion.div
             initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
                className={cn('fixed left-0 top-0 h-full w-64 shadow-lg z-[9999] flex flex-col', theme === 'dark' ? 'bg-gray-800' : 'bg-white')}
           >
-            {/* Overlay behind menu */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowHamburger(false)}
-              className="fixed inset-0 bg-black z-[9998]"
-            />
             <div className="p-4 border-b relative z-[10000]" style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e7eb' }}>
               <button onClick={() => setShowHamburger(false)} className="p-2">
                 <X className="w-6 h-6" />
@@ -486,17 +487,9 @@ export default function App() {
               </button>
             </div>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
-
-      {/* Overlay for hamburger */}
-      {showHamburger && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={() => setShowHamburger(false)}
-          style={{ zIndex: 40 }}
-        />
-      )}
 
       {/* Driver Card Modal */}
       {showDriverCard && currentDriver && (
