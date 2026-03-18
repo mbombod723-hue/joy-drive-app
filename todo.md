@@ -90,3 +90,13 @@
 - [x] Vérifier que le numéro +27788002462 est présent dans About
 - [ ] Vérifier la connexion Supabase et les tables créées
 - [ ] Tester l'authentification Supabase
+
+
+## Phase 13: Favorites System (March 18, 2026)
+- [x] Créer la table `favorites` dans la base de données
+- [x] Ajouter les helpers de base de données (get, add, delete, update)
+- [x] Créer les procédures tRPC pour gérer les favoris
+- [x] Créer le composant FavoritesPanel avec UI complète
+- [x] Intégrer les favoris dans la page principale avec bouton "Show Favorites"
+- [x] Ajouter les tests vitest pour les favoris (12 tests passés)
+- [x] Permettre aux utilisateurs de sauvegarder/supprimer/modifier les destinations favorites

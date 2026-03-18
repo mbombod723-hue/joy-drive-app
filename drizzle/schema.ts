@@ -83,3 +83,19 @@ export const trips = mysqlTable("trips", {
 
 export type Trip = typeof trips.$inferSelect;
 export type InsertTrip = typeof trips.$inferInsert;
+
+// Favorites table (for storing favorite destinations)
+export const favorites = mysqlTable("favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  label: varchar("label", { length: 100 }).notNull(), // e.g., "Home", "Work", "Gym"
+  address: text("address").notNull(), // Full address
+  latitude: varchar("latitude", { length: 20 }).notNull(),
+  longitude: varchar("longitude", { length: 20 }).notNull(),
+  icon: varchar("icon", { length: 50 }).default("MapPin"), // Icon type (Home, Briefcase, etc.)
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Favorite = typeof favorites.$inferSelect;
+export type InsertFavorite = typeof favorites.$inferInsert;

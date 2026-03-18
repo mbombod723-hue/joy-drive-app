@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Search, Car, Package, Truck, User, Clock, ChevronRight, X, Info, ShieldCheck, LogOut, Moon, Sun, Bell, Globe, Navigation, Star, ArrowRight, Camera, FileText, Hash, Palette, Menu, Phone, AlertCircle, Upload } from 'lucide-react';
+import { MapPin, Search, Car, Package, Truck, User, Clock, ChevronRight, X, Info, ShieldCheck, LogOut, Moon, Sun, Bell, Globe, Navigation, Star, ArrowRight, Camera, FileText, Hash, Palette, Menu, Phone, AlertCircle, Upload, Heart } from 'lucide-react';
 import { useAppStore, useAuthStore, type Language } from './store/useStore';
 import { translations } from './translations';
 import { SplashScreen } from './components/SplashScreen';
@@ -22,6 +22,7 @@ import { HistoryPage } from './pages/History';
 import { LanguagePage } from './pages/Language';
 import { ShareLocationPage } from './pages/ShareLocation';
 import { calculatePrice, estimateETA, calculateDistance, formatPrice, getVehicleColor } from './lib/vehicleSystem';
+import { FavoritesPanel } from './components/FavoritesPanel';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -41,6 +42,7 @@ export default function App() {
   const [showHistoryPage, setShowHistoryPage] = useState(false);
   const [showLanguagePage, setShowLanguagePage] = useState(false);
   const [showShareLocationPage, setShowShareLocationPage] = useState(false);
+  const [showFavoritesPanel, setShowFavoritesPanel] = useState(false);
   const { language, theme, setTheme, setLanguage, isNotificationsEnabled, toggleNotifications, isLocationSharingEnabled, toggleLocationSharing, activeTrip, setActiveTrip } = useAppStore();
   const { user, setUser, userName, setUserName, profilePic, setProfilePic } = useAuthStore();
   const t = translations[language];
@@ -422,6 +424,28 @@ export default function App() {
               <p className="text-lg font-bold">8 min</p>
             </div>
           </div>
+
+          {/* Favorites Button */}
+          <button
+            onClick={() => setShowFavoritesPanel(!showFavoritesPanel)}
+            className="w-full py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all flex items-center justify-center gap-2"
+          >
+            <Heart className="w-5 h-5" />
+            {showFavoritesPanel ? 'Hide Favorites' : 'Show Favorites'}
+          </button>
+
+          {/* Favorites Panel */}
+          {showFavoritesPanel && (
+            <div className={cn('rounded-lg border', theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200')}>
+              <FavoritesPanel
+                onSelectFavorite={(favorite) => {
+                  setDestInput(favorite.address);
+                  setShowFavoritesPanel(false);
+                }}
+                destinationLocation={destInput}
+              />
+            </div>
+          )}
 
           {/* Find Driver Button */}
           <button

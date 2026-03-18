@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, favorites, Favorite, InsertFavorite } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -90,3 +90,68 @@ export async function getUserByOpenId(openId: string) {
 }
 
 // TODO: add feature queries here as your schema grows.
+
+// Favorites queries
+export async function getFavoritesByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get favorites: database not available");
+    return [];
+  }
+
+  try {
+    const result = await db.select().from(favorites).where(eq(favorites.userId, userId));
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to get favorites:", error);
+    return [];
+  }
+}
+
+export async function addFavorite(favorite: InsertFavorite) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot add favorite: database not available");
+    return undefined;
+  }
+
+  try {
+    const result = await db.insert(favorites).values(favorite);
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to add favorite:", error);
+    throw error;
+  }
+}
+
+export async function deleteFavorite(favoriteId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete favorite: database not available");
+    return false;
+  }
+
+  try {
+    await db.delete(favorites).where(eq(favorites.id, favoriteId));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete favorite:", error);
+    throw error;
+  }
+}
+
+export async function updateFavorite(favoriteId: number, updates: Partial<InsertFavorite>) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update favorite: database not available");
+    return undefined;
+  }
+
+  try {
+    const result = await db.update(favorites).set(updates).where(eq(favorites.id, favoriteId));
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to update favorite:", error);
+    throw error;
+  }
+}
