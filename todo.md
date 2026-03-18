@@ -100,3 +100,21 @@
 - [x] Intégrer les favoris dans la page principale avec bouton "Show Favorites"
 - [x] Ajouter les tests vitest pour les favoris (12 tests passés)
 - [x] Permettre aux utilisateurs de sauvegarder/supprimer/modifier les destinations favorites
+
+
+## Phase 14: Google Maps Integration for Favorites (March 18, 2026)
+- [ ] Configurer Google Maps API et vérifier les clés
+- [ ] Créer composant MapFavoritesSelector avec marqueurs interactifs
+- [ ] Implémenter géocodage inversé pour convertir coordonnées en adresses
+- [ ] Ajouter recherche Google Places pour les adresses
+- [ ] Intégrer drag & drop pour affiner la localisation
+- [ ] Tester et sauvegarder les changements
+
+- [x] Configurer Google Maps API et vérifier les clés
+- [x] Créer composant MapFavoritesSelector avec marqueurs interactifs
+- [x] Implémenter géocodage inversé pour convertir coordonnées en adresses
+- [x] Ajouter recherche Google Places pour les adresses
+- [x] Intégrer drag & drop pour affiner la localisation
+- [x] Créer service de géocodage complet
+- [x] Créer composant PlacesAutocomplete avec recherche Places
+- [x] Créer utilitaires pour marqueurs draggables
