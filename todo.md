@@ -1,0 +1,79 @@
+# Joy Drive App - TODO List
+
+## Phase 1: Layout & Menu Fixes
+- [x] Corriger z-index du menu hamburger
+- [x] Vérifier layout 40/60 (carte/options)
+- [x] Ajouter "Delete Account" au menu
+
+## Phase 2: Address Search & Maps Integration
+- [x] Intégrer Google Maps API pour recherche d'adresses en temps réel
+- [x] Afficher suggestions d'adresses pendant la saisie
+- [ ] Ajouter option "Stop" pour adresses intermédiaires
+- [x] Implémenter géocodage inverse pour afficher adresses réelles
+
+## Phase 3: Vehicle System
+- [x] Ajouter système de véhicules avec couleurs différentes
+  - [x] Lite (couleur 1)
+  - [x] Economy (couleur 2)
+  - [x] Express (couleur 3)
+  - [x] VIP (couleur 4)
+  - [x] Packages (couleur 5)
+  - [x] Moving (couleur 6)
+- [x] Implémenter calcul dynamique des prix basé sur distance et tarif SA
+- [x] Afficher prix et "Joy" à côté du véhicule sur la carte
+- [x] Créer véhicule stylé moderne pour le trajet
+
+## Phase 4: Driver & Communication System
+- [x] Implémenter tableau chauffeur avec:
+  - [x] Nom et post-nom
+  - [x] Couleur du véhicule
+  - [x] Numéro matricule
+  - [x] Options message et appel
+- [ ] Ajouter système de messagerie en temps réel (Supabase)
+- [ ] Ajouter système d'appel (intégration)
+
+## Phase 5: Trip & Notifications
+- [x] Afficher position du chauffeur en temps réel
+- [x] Afficher trajet respectant les avenues réelles
+- [ ] Ajouter sonnerie d'arrivée du chauffeur
+- [ ] Ajouter sonnerie d'arrivée à destination
+- [ ] Implémenter système de notification temps réel
+
+## Phase 6: Rating System
+- [x] Implémenter système de notation avec étoiles jaunes
+- [x] Ajouter options d'avis:
+  - [x] Chauffeur poli ou pas
+  - [x] Véhicule propre ou pas
+  - [x] Bonne conduite ou pas
+- [ ] Sauvegarder les ratings dans Supabase
+
+## Phase 7: Stripe Integration
+- [x] Configurer Stripe pour paiements
+- [ ] Implémenter paiement après trajet
+- [ ] Ajouter historique des paiements
+
+## Phase 8: Become a Driver
+- [x] Créer formulaire complet avec tous les champs:
+  - [x] Informations personnelles
+  - [x] Documents (permis, assurance, etc)
+  - [x] Informations véhicule
+  - [x] Informations bancaires
+- [x] Ajouter option "Become a Driver" sur page d'enregistrement
+- [ ] Implémenter validation des documents
+
+## Phase 9: Settings & Pages
+- [x] Implémenter page "About"
+- [x] Implémenter page "Privacy Policy"
+- [ ] Implémenter sélecteur de langue
+- [x] Implémenter "Delete Account"
+- [x] Tous les textes en anglais
+
+## Phase 10: Button Styling
+- [x] Changer "Find a Driver" en bleu très foncé
+- [x] Rendre "Find a Driver" opérationnel
+
+## Phase 11: Testing & Deployment
+- [x] Tester toutes les fonctionnalités
+- [x] Vérifier l'intégration Supabase
+- [x] Vérifier l'intégration Stripe
+- [ ] Déployer sur Vercel

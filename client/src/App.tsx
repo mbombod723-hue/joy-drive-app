@@ -9,11 +9,17 @@ import { MapComponent } from './components/MapComponent';
 import { supabase, getSupabase } from './lib/supabase';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { AddressSearch } from './components/AddressSearch';
+import { DriverCard, type Driver } from './components/DriverCard';
+import { RatingModal, type RatingData } from './components/RatingModal';
+import { BecomeDriverForm, type DriverFormData } from './components/BecomeDriverForm';
+import { AboutPage } from './pages/About';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
+import { calculatePrice, estimateETA, calculateDistance, formatPrice, getVehicleColor } from './lib/vehicleSystem';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [activeTab, setActiveTab] = useState('home');
@@ -33,6 +39,18 @@ export default function App() {
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState({ clean: true, polite: true, comment: '' });
+  
+  // Address search states
+  const [pickupLocation, setPickupLocation] = useState('');
+  const [destinationLocation, setDestinationLocation] = useState('');
+  const [pickupCoords, setPickupCoords] = useState({ lat: -26.1087, lng: 28.0545 });
+  const [destinationCoords, setDestinationCoords] = useState({ lat: -26.1361, lng: 28.0492 });
+  
+  // Driver and trip states
+  const [currentDriver, setCurrentDriver] = useState<Driver | null>(null);
+  const [showDriverCard, setShowDriverCard] = useState(false);
+  const [tripStatus, setTripStatus] = useState<'idle' | 'searching' | 'arriving' | 'arrived' | 'in-transit' | 'completed'>('idle');
+  const [selectedVehicleType, setSelectedVehicleType] = useState('economy');
   const [tripHistory, setTripHistory] = useState([
     { type: 'ride', route: 'Sandton → OR Tambo', tier: t.economy, date: 'Mar 15, 14:20', price: 189, icon: Car },
     { type: 'package', route: 'Rosebank → Midrand', tier: t.express, date: 'Mar 12, 09:15', price: 129, icon: Package },
@@ -208,6 +226,32 @@ export default function App() {
     );
   }
 
+  // Show About page
+  if (showAbout) {
+    return <AboutPage onBack={() => setShowAbout(false)} />;
+  }
+
+  // Show Privacy Policy page
+  if (showPrivacy) {
+    return <PrivacyPolicyPage onBack={() => setShowPrivacy(false)} />;
+  }
+
+  // Show Become Driver form
+  if (showBecomeDriver) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
+        <BecomeDriverForm
+          onSubmit={(data: DriverFormData) => {
+            console.log('Driver application submitted:', data);
+            setShowBecomeDriver(false);
+          }}
+          onCancel={() => setShowBecomeDriver(false)}
+        />
+      </div>
+    );
+  }
+
+  // make sure to consider if you need authentication for certain routes
   return (
     <div className={cn('flex flex-col', theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900')} style={{ height: '100vh' }}>
       {/* Top Bar */}
@@ -344,8 +388,26 @@ export default function App() {
 
           {/* Find Driver Button */}
           <button
-            onClick={() => setShowFindDriver(true)}
-            className="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-green-700 transition-all"
+            onClick={() => {
+              // Simulate finding a driver
+              const mockDriver: Driver = {
+                id: 'DRV-001',
+                name: 'Thabo',
+                surname: 'Mthembu',
+                rating: 4.8,
+                reviews: 342,
+                vehicleColor: getVehicleColor(selectedVehicleType),
+                vehicleType: selectedVehicleType.charAt(0).toUpperCase() + selectedVehicleType.slice(1),
+                licensePlate: 'JHB 234 GP',
+                photo: undefined,
+                eta: estimateETA(calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng)),
+                distance: calculateDistance(pickupCoords.lat, pickupCoords.lng, destinationCoords.lat, destinationCoords.lng),
+              };
+              setCurrentDriver(mockDriver);
+              setShowDriverCard(true);
+              setTripStatus('arriving');
+            }}
+            className="w-full py-3 bg-gradient-to-r from-blue-900 to-blue-800 text-white font-bold rounded-lg hover:from-blue-800 hover:to-blue-700 transition-all"
           >
             {t.findADriver || 'Find a Driver'}
           </button>
@@ -414,8 +476,46 @@ export default function App() {
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={() => setShowHamburger(false)}
+          style={{ zIndex: 40 }}
         />
       )}
+
+      {/* Driver Card Modal */}
+      {showDriverCard && currentDriver && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-y-auto">
+            <DriverCard
+              driver={currentDriver}
+              status={tripStatus as any}
+              onCall={() => {
+                console.log('Calling driver...');
+                alert('Calling ' + currentDriver.name);
+              }}
+              onMessage={() => {
+                console.log('Messaging driver...');
+                alert('Opening chat with ' + currentDriver.name);
+              }}
+              onCancel={() => {
+                setShowDriverCard(false);
+                setTripStatus('idle');
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Rating Modal */}
+      <RatingModal
+        isOpen={showRatingModal}
+        onClose={() => setShowRatingModal(false)}
+        onSubmit={(data: RatingData) => {
+          console.log('Rating submitted:', data);
+          setShowRatingModal(false);
+          // Here you would save the rating to Supabase
+        }}
+        driverName={currentDriver ? `${currentDriver.name} ${currentDriver.surname}` : 'Driver'}
+        tripPrice={125}
+      />
     </div>
   );
 }
