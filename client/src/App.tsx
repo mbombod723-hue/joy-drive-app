@@ -16,6 +16,11 @@ import { BecomeDriverForm, type DriverFormData } from './components/BecomeDriver
 import { ChatBox } from './components/ChatBox';
 import { AboutPage } from './pages/About';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
+import { ProfilePage } from './pages/Profile';
+import { NotificationsPage } from './pages/Notifications';
+import { HistoryPage } from './pages/History';
+import { LanguagePage } from './pages/Language';
+import { ShareLocationPage } from './pages/ShareLocation';
 import { calculatePrice, estimateETA, calculateDistance, formatPrice, getVehicleColor } from './lib/vehicleSystem';
 
 function cn(...inputs: ClassValue[]) {
@@ -31,6 +36,11 @@ export default function App() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showBecomeDriver, setShowBecomeDriver] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showNotificationsPage, setShowNotificationsPage] = useState(false);
+  const [showHistoryPage, setShowHistoryPage] = useState(false);
+  const [showLanguagePage, setShowLanguagePage] = useState(false);
+  const [showShareLocationPage, setShowShareLocationPage] = useState(false);
   const { language, theme, setTheme, setLanguage, isNotificationsEnabled, toggleNotifications, isLocationSharingEnabled, toggleLocationSharing, activeTrip, setActiveTrip } = useAppStore();
   const { user, setUser, userName, setUserName, profilePic, setProfilePic } = useAuthStore();
   const t = translations[language];
@@ -441,13 +451,13 @@ export default function App() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
-              <button onClick={() => { setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
+              <button onClick={() => { setShowProfile(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 <User className="w-5 h-5" /> {'Profile'}
               </button>
-              <button onClick={() => { setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
+              <button onClick={() => { setShowNotificationsPage(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 <Bell className="w-5 h-5" /> {t.notifications || 'Notifications'}
               </button>
-              <button onClick={() => { setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
+              <button onClick={() => { setShowHistoryPage(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 <Clock className="w-5 h-5" /> {t.history || 'Trip History'}
               </button>
               <button onClick={() => { setShowAbout(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
@@ -462,10 +472,10 @@ export default function App() {
               <button onClick={() => { setTheme(theme === 'dark' ? 'light' : 'dark'); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />} {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
               </button>
-              <button onClick={() => { setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
+              <button onClick={() => { setShowLanguagePage(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 <Globe className="w-5 h-5" /> {t.language || 'Language'}
               </button>
-              <button onClick={() => { toggleLocationSharing(); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
+              <button onClick={() => { setShowShareLocationPage(true); setShowHamburger(false); }} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2')}>
                 <Navigation className="w-5 h-5" /> {t.shareLocation || 'Share Location'}
               </button>
               <button onClick={handleEmergencyCall} className={cn('w-full text-left px-4 py-2 rounded-lg hover:bg-red-200 dark:hover:bg-red-900 flex items-center gap-2 text-red-600')}>

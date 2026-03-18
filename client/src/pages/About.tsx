@@ -111,8 +111,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
             </p>
             <p>
               <strong>Phone:</strong>{' '}
-              <a href="tel:+27123456789" className="hover:underline">
-                +27 (0)1 234 5678
+              <a href="tel:+27788002462" className="hover:underline">
+                +27 788 002 462
               </a>
             </p>
             <p>
