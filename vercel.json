@@ -5,7 +5,7 @@
   "outputDirectory": "dist/public",
   "framework": "vite",
 
-  "regions": ["iad"],
+
   "functions": {
     "api/**": {
       "memory": 1024,
